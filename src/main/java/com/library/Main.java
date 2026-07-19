@@ -27,7 +27,10 @@ public class Main {
             System.out.println("8 Search Student");
             System.out.println("9 Delete Student");
             System.out.println("10 Update Student");
-            System.out.println("11 Exist");
+            System.out.println("11 Issue Book");
+            System.out.println("12 ViewIssuedBook");
+            System.out.println("13 Exist");
+
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -199,6 +202,21 @@ public class Main {
 
                     break;
                 case 11:
+
+                    System.out.print("Enter Student ID: ");
+                    int issueStudentId = sc.nextInt();
+
+                    System.out.print("Enter Book ID: ");
+                    int issueBookId = sc.nextInt();
+
+                    libraryService.issueBook(issueStudentId, issueBookId);
+
+                    break;
+                case 12:
+                    libraryService.viewIssuedBooks();
+
+                    break;
+                case 13:
                     System.out.println("Thank you");
                     return;
 

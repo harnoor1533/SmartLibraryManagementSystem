@@ -3,11 +3,14 @@ package com.library.service;
 import com.library.model.Book;
 import java.util.ArrayList;
 import com.library.model.Student;
+import com.library.model.IssueRecord;
+
 
 public class LibraryService {
 
     private ArrayList<Book> books = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<IssueRecord> issuedBooks = new ArrayList<>();
 
     // Add Book
     public void addBook(Book book) {
@@ -150,4 +153,66 @@ public class LibraryService {
 
         System.out.println("\nStudent not found!");
     }
+    public void issueBook(int studentId, int bookId) {
+
+        Student foundStudent = null;
+        Book foundBook = null;
+
+        // Find Student
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
+                foundStudent = student;
+                break;
+            }
+        }
+
+        // Find Book
+        for (Book book : books) {
+            if (book.getBookId() == bookId) {
+                foundBook = book;
+                break;
+            }
+        }
+
+        // Check if Student exists
+        if (foundStudent == null) {
+            System.out.println("\nStudent not found!");
+            return;
+        }
+
+        // Check if Book exists
+        if (foundBook == null) {
+            System.out.println("\nBook not found!");
+            return;
+        }
+
+        // Check Availability
+        if (foundBook.getQuantity() <= 0) {
+            System.out.println("\nBook is not available!");
+            return;
+        }
+
+        // Issue Book
+        foundBook.setQuantity(foundBook.getQuantity() - 1);
+
+        IssueRecord record = new IssueRecord(studentId, bookId);
+        issuedBooks.add(record);
+
+        System.out.println("\n✅ Book issued successfully!");
+    }
+    public void viewIssuedBooks() {
+
+        if (issuedBooks.isEmpty()) {
+            System.out.println("\nNo books have been issued.");
+            return;
+        }
+
+        System.out.println("\n========= ISSUED BOOKS =========");
+
+        for (IssueRecord record : issuedBooks) {
+            System.out.println(record);
+            System.out.println("----------------------------");
+        }
+    }
+
 }
